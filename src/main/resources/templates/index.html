@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Condominio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+</head>
+<body>
+
+    <!-- Cadastrar morador botão -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CdastrarMorador">
+        Cadastrar Morador
+    </button>
+    <!-- Cadastrar área botão -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Cadastrar área
+    </button>
+    <!-- Cadastrar alterar Status Reserva -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StatusModal">
+        Alterar Status reserva
+    </button>
+    <!-- Modal Morador -->
+    <div class="modal fade" id="CdastrarMorador" tabindex="-1" aria-labelledby="LabelMorador" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="LabelMorador">Cadastro de Morador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="cadastrarMorador(event)">
+                        <div class="mb-0">
+                            <label for="nomemorador" class="form-label">Nome Morador</label>
+                            <input type="text" class="form-control" id="nomemorador" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-1">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="Telefone">Telefone</label>
+                            <input type="text" class="form-control" id="Telefone">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="Endereco">Endereço</label>
+                            <input type="text" class="form-control" id="Endereco">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="cpf">Cpf</label>
+                            <input type="text" class="form-control" id="cpf">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="Tipo">Tipo</label>
+                            <input type="text" class="form-control" id="Tipo">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal área-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastro de área</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="cadastrarArea(event)">
+                        <div>
+                            <label for="nomeArea" class="form-label">Nome área</label>
+                            <input type="text" class="form-control" id="nomeArea" >
+                        </div>
+                        <div class="mb-1">
+                            <label for="desArea" class="form-label">Descrição</label>
+                            <input type="text" class="form-control" id="desArea">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="Tamanho">Tamanho</label>
+                            <input type="number" class="form-control" id="Tamanho">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="localiza">Localização</label>
+                            <input type="text" class="form-control" id="localiza">
+                        </div>
+                        <div class="mb-1">
+                            <input type="checkbox" class="form-check-input" id="utilizavel">
+                            <label class="form-check-label" for="utilizavel">Área está utilizavel?</label>
+                        </div>
+                        <div class="mb-2">
+                            <input type="checkbox" class="form-check-input" id="alugavel">
+                            <label class="form-check-label" for="alugavel">Esta área é alugavel?</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal StatusModal-->
+    <div class="modal fade" id="StatusModal" tabindex="-1" aria-labelledby="StatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="StatusModalLabel">Alterar Status reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="AlterarStatus(event)">
+                        <div class="mb-2">
+                            <label for="select" class="form-label">Selecione a reserva:</label>
+                            <select id="select" class="form-select" aria-label="Default select example">
+
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="TipoStatus" class="form-label">Altere o Status da reserva:</label>
+                            <select id="TipoStatus" class="form-select" >
+                                <option>Negada</option>
+                                <option>Aprovada</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Alterar Status</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

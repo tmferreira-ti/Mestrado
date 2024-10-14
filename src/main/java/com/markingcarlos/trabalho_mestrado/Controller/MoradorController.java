@@ -35,11 +35,23 @@ public class MoradorController {
         morador.setEndereco(Endereco);
         BigInteger numerocpf = new BigInteger(cpf);
         morador.setCPFMorador(numerocpf);
+        System.out.println("Teste");
         if (nome.isEmpty() || email.isEmpty() || Telefone.isEmpty() || Endereco.isEmpty()){
             return "Erro ao cadastrar morador";
         }
-        moradorRepository.save(morador);
-        return "Morador Salvo com sucesso!";
+        // Salva o morador no banco de dados
+        MoradorModel moradorSalvo = moradorRepository.save(morador);
+
+        // Verifica se o morador foi realmente salvo
+        if (moradorSalvo != null && moradorSalvo.getCPFMorador() != null) {
+            System.out.println("Salvo com sucesso!");
+            return "Morador salvo com sucesso!";
+
+        } else {
+            System.out.println("Erro ao cadastrar morador");
+            return "Erro ao salvar o morador.";
+        }
+
     }
 
 

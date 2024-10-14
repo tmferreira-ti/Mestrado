@@ -8,7 +8,9 @@ import com.markingcarlos.trabalho_mestrado.Repository.MoradorRepository;
 import com.markingcarlos.trabalho_mestrado.Repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -34,18 +36,21 @@ public class ReservaControler {
 
 
     @ResponseBody
-    @PostMapping
+    @PostMapping("/cadastra")
     public String CadastraReserva(@RequestParam("inico") String dataInicio,
                                   @RequestParam("fim")String dataFim,
                                   @RequestParam("descricao")String descricao,
                                   @RequestParam("area")String idArea,
-                                  @RequestParam("cpf")String cpfMorador) {
+                                  OAuth2AuthenticationToken authentication
+                                  ) {
 
         ReservaModel reserva = new ReservaModel();
+        String email = authentication.getPrincipal().getAttribute("email");
+        MoradorModel morador = moradorRepository.findByEmail(email);
 
         reserva.setStatus("Pendente");
         reserva.setAtiva(true);
-        if(dataInicio != null || dataFim != null || descricao != null || idArea != null || cpfMorador != null) {
+        if(dataInicio != null || dataFim != null || descricao != null || idArea != null ) {
             reserva.setDescricao(descricao);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate inico = LocalDate.parse(dataInicio, formatter);
@@ -65,12 +70,11 @@ public class ReservaControler {
                 return "Area não encontrada";
             }
 
-            BigInteger cpf = new BigInteger(cpfMorador);
-            MoradorModel morador = moradorRepository.findByCPFMorador(cpf);
+
             reserva.setTitularReserva(morador);
 
             emailController.sendEmail(morador.getEmail(),"Reserva realizada com sucesso","Sua solicitação de reserva foi solicitada com sucesso");
-
+            reservaRepository.save(reserva);
             return "Reserva Cadastrada com sucesso!";
         }
         return "Dados em falta";
@@ -152,23 +156,17 @@ public class ReservaControler {
         }
     }
 
-    @ResponseBody
-    @GetMapping("/lista")
-    public String ListReservas(){
-        StringBuilder resultado = new StringBuilder();
-        List<ReservaModel> reservas = reservaRepository.findAll();
-        if (!reservas.isEmpty()) {
-            for (ReservaModel reserva : reservas) {
-                resultado.append("Titular: ").append(reserva.getTitularReserva().getNomeMorador()).append("\n");
-                resultado.append("Local: ").append(reserva.getAreaReservada().getNome()).append("\n");
-                resultado.append("Data Início: ").append(reserva.getDataInicio()).append("\n");
-                resultado.append("----------------------------------------\n");
-            }
-        } else {
-            resultado.append("Nenhuma reserva encontrada.");
-        }
 
-        return resultado.toString();
+    @GetMapping("/lista")
+    @ResponseBody
+    public List<Object[]> ListReservas(){
+        return reservaRepository.findByInfo("Pendente");
+    }
+    @GetMapping("/listaporEmail")
+    @ResponseBody
+    public List<Object[]> ListReservasporEmail(OAuth2AuthenticationToken authentication){
+        String email = authentication.getPrincipal().getAttribute("email");
+        return reservaRepository.findByReservaPorEmail(email);
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Area;
+import java.util.List;
 
 @Controller
 @RequestMapping("/area")
@@ -39,5 +40,12 @@ public class AreaController {
 
         return "Área cadastrada com sucesso!";
     }
+
+    @GetMapping("/listaAreaAlugavel")
+    @ResponseBody
+    public List<Object[]> ListaAreaAlugavel(){
+        return areaRepository.findAreaAlugavel();
+    }
+
 }
 

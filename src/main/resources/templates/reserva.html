@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+</head>
+<body>
+    <div style="display: flex;justify-content: center;align-items: center">
+        <div >
+            <h1>Bem vindo ao sistema de reserva</h1>
+            <p style="text-align: center">Clique no botão para inciar sua solicitação:</p>
+        </div>
+
+    </div>
+
+    <div style="display: flex;justify-content: center;align-items: center">
+        <!-- Cadastrar reserva -->
+        <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#solireserva">
+            Solicitar reserva
+        </button>
+    </div>
+    <!-- Modal área-->
+    <div class="modal fade" id="solireserva" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Solicitar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="cadastrarReserva(event)">
+                        <div class="mb-1">
+                            <label for="select" class="form-label">Selecione a área que deseja reservar:</label>
+                            <select id="select" class="form-select" aria-label="Default select example">
+
+                            </select>
+                        </div>
+                        <div class="mb-1">
+                            <label for="data" class="form-label">Digite o inicio da reserva(dd-mm-yyyy):</label>
+                            <input type="text" class="form-control" id="data">
+                        </div>
+                        <div class="mb-1">
+                            <label for="datafim" class="form-label">Digite o final da reserva(dd-mm-yyyy):</label>
+                            <input type="text" class="form-control" id="datafim">
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="desc">Digite uma breve descrição sobre o motivo da reserva:</label>
+                            <input type="text" class="form-control" id="desc">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Solicitar reserva</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="js/scriptReservas.js"></script>
+</body>
+</html>
